@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>اجمعي ١٠ صناديق يا قلبي لتفتحي الصندوق الكبير 🎁</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  overflow:hidden;
+  text-align:center;
+  color:white;
+  background: linear-gradient(135deg,#141e30,#243b55);
+}
+
+/* score */
+#score{
+  position:fixed;
+  top:15px;
+  left:15px;
+  font-size:20px;
+}
+
+/* small boxes */
+.box{
+  position:absolute;
+  width:55px;
+  height:55px;
+  background: linear-gradient(135deg,#ff6b81,#ffb6c1);
+  border-radius:18px;
+  cursor:pointer;
+  box-shadow:0 0 15px rgba(255,105,135,0.6);
+  animation: float 1.5s infinite alternate;
+}
+
+.box::after{
+  content:"🎁";
+  font-size:26px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100%;
+}
+
+@keyframes float{
+  from{transform:scale(1);}
+  to{transform:scale(1.08);}
+}
+
+/* big box */
+#bigBox{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  width:150px;
+  height:150px;
+  background: linear-gradient(135deg,#ffd700,#ff9f1c);
+  border-radius:25px;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  font-size:70px;
+  cursor:pointer;
+  box-shadow:0 0 30px gold;
+  opacity:0;
+  transition:0.6s ease;
+}
+
+/* open animation */
+#bigBox.open{
+  transform:translate(-50%,-50%) scale(1) rotate(5deg);
+  opacity:1;
+  animation: shake 0.4s ease;
+}
+
+@keyframes shake{
+  0%{transform:translate(-50%,-50%) scale(1) rotate(0deg);}
+  25%{transform:translate(-50%,-50%) scale(1.05) rotate(-5deg);}
+  50%{transform:translate(-50%,-50%) scale(1.05) rotate(5deg);}
+  100%{transform:translate(-50%,-50%) scale(1) rotate(0deg);}
+}
+
+/* message */
+#msg{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(0,0,0,0.75);
+  padding:18px;
+  border-radius:12px;
+  font-size:18px;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div id="score">Boxes: 0</div>
+
+<div id="bigBox">🎁</div>
+
+<div id="msg"></div>
+
+<script>
+
+let count = 0;
+
+/* messages */
+const messages = [
+  "💖 روبا إنتِ قمررر",
+  "✨ بحبكك",
+  "🎀 إنتِ مميزة",
+  "💫 وجودك مهم",
+  "💛 بموت فيكِ",
+  "🌟 بعشقك"
+];
+
+/* spawn boxes */
+setInterval(()=>{
+  if(count >= 10) return;
+
+  let box = document.createElement("div");
+  box.className = "box";
+
+  box.style.left = Math.random()*window.innerWidth + "px";
+  box.style.top = "-60px";
+
+  document.body.appendChild(box);
+
+  let fall = setInterval(()=>{
+    let top = parseFloat(box.style.top);
+    box.style.top = (top + 5) + "px";
+
+    if(top > window.innerHeight){
+      box.remove();
+      clearInterval(fall);
+    }
+  },20);
+
+  /* click box */
+  box.onclick = ()=>{
+    count++;
+    document.getElementById("score").innerText = "Boxes: " + count;
+
+    /* small message */
+    let msg = document.getElementById("msg");
+    msg.style.display = "block";
+    msg.innerHTML = messages[Math.floor(Math.random()*messages.length)];
+
+    setTimeout(()=>{
+      msg.style.display = "none";
+    },1200);
+
+    box.remove();
+    clearInterval(fall);
+
+    if(count >= 10){
+      showBigBox();
+    }
+  };
+
+},700);
+
+/* big box */
+function showBigBox(){
+  let big = document.getElementById("bigBox");
+  big.style.display = "flex";
+
+  setTimeout(()=>{
+    big.classList.add("open");
+  },100);
+
+  big.onclick = ()=>{
+    let msg = document.getElementById("msg");
+    msg.style.display = "block";
+
+    msg.innerHTML = `
+💖 FOR ROUBA 💖<br><br>
+
+كل صندوق جمعتيه كان رسالة صغيرة…<br>
+بس بالنهاية صار عندك هدية كبيرة ✨<br><br>
+
+إنتِ ما بتتعوضي وما في متلك…<br>
+إنتِ ضحكتك لحالها بدا قلب يحباخليني دايما شوفها لهالضحكة 💫
+`;
+  };
+}
+
+</script>
+
+</body>
+</html>

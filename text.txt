@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️ Open My Heart</title>
+
+<style>
+body{
+margin:0;
+height:100vh;
+background:radial-gradient(circle,#111,#000);
+font-family:Arial;
+overflow:hidden;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
+/* Ruba name */
+#ruba{
+position:absolute;
+top:60px;
+font-size:42px;
+font-weight:bold;
+color:pink;
+text-shadow:0 0 20px pink;
+}
+
+/* heart */
+#heart{
+font-size:80px;
+position:absolute;
+top:50%;
+left:10%;
+transition:4s ease-in-out;
+text-shadow:0 0 20px #ff4d6d;
+}
+
+/* button */
+button{
+position:absolute;
+bottom:80px;
+padding:12px 25px;
+border:none;
+border-radius:10px;
+background:pink;
+color:black;
+font-weight:bold;
+cursor:pointer;
+box-shadow:0 0 20px pink;
+}
+
+/* message */
+#msg{
+position:absolute;
+bottom:150px;
+text-align:center;
+opacity:0;
+transition:1s;
+line-height:1.8;
+padding:0 20px;
+}
+
+/* active move */
+.move{
+left:70%;
+transform:scale(1.2);
+}
+</style>
+</head>
+
+<body>
+
+<div id="ruba">Ruba</div>
+
+<div id="heart">❤️</div>
+
+<div id="msg">
+بهدوء… 💛<br><br>
+
+ما في شي معقّد.<br>
+بس قلب واحد اختار يوصل لإلك.<br><br>
+
+روبا… هيدا قلبي إلك ❤️
+</div>
+
+<button onclick="openHeart()">Open My Heart</button>
+
+<script>
+function openHeart(){
+document.getElementById("heart").classList.add("move");
+
+setTimeout(()=>{
+document.getElementById("msg").style.opacity="1";
+},3000);
+}
+</script>
+
+</body>
+</html>

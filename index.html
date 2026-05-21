@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Ruba Boxes 🎁</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  overflow:hidden;
+  text-align:center;
+  color:white;
+  background: linear-gradient(135deg,#141e30,#243b55);
+}
+
+#score{
+  position:fixed;
+  top:15px;
+  left:15px;
+  font-size:20px;
+}
+
+/* box */
+.box{
+  position:absolute;
+  font-size:40px;
+  cursor:pointer;
+}
+
+/* big box */
+#bigBox{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:120px;
+  display:none;
+  cursor:pointer;
+  filter: drop-shadow(0 0 20px gold);
+}
+
+/* message */
+#msg{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:80%;
+  background:rgba(0,0,0,0.7);
+  padding:20px;
+  border-radius:12px;
+  display:none;
+  font-size:20px;
+  line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div id="score">Boxes: 0</div>
+
+<div id="bigBox">🎁</div>
+
+<div id="msg"></div>
+
+<script>
+
+let count = 0;
+
+/* spawn boxes */
+setInterval(()=>{
+  if(count >= 10) return;
+
+  let box = document.createElement("div");
+  box.className = "box";
+  box.innerHTML = "📦";
+
+  box.style.left = Math.random()*window.innerWidth + "px";
+  box.style.top = "-50px";
+
+  document.body.appendChild(box);
+
+  let fall = setInterval(()=>{
+    let top = parseFloat(box.style.top);
+    box.style.top = (top + 5) + "px";
+
+    if(top > window.innerHeight){
+      box.remove();
+      clearInterval(fall);
+    }
+  },20);
+
+  box.onclick = ()=>{
+    count++;
+    document.getElementById("score").innerText = "Boxes: " + count;
+
+    box.remove();
+    clearInterval(fall);
+
+    if(count >= 10){
+      showBigBox();
+    }
+  };
+
+},700);
+
+
+/* big box */
+function showBigBox(){
+  let big = document.getElementById("bigBox");
+  big.style.display = "block";
+
+  big.onclick = ()=>{
+    document.getElementById("msg").style.display = "block";
+
+    document.getElementById("msg").innerHTML = `
+💖 FOR ROUBA 💖<br><br>
+
+كل صندوق جمعتِه كان خطوة صغيرة…<br>
+بس بالنهاية وصلتي لشي كبير ✨<br><br>
+
+مش مهم السرعة… المهم إنك كملتي 💫<br><br>
+
+إنتِ أجمل “reward” بالحياة 🎁
+`;
+  };
+}
+
+</script>
+
+</body>
+</html>
